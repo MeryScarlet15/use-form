@@ -4,7 +4,7 @@
 
 This custom hook control all the form validations and values.
 
-### Parámetros
+### Parameters
 
 - **initialValues: **Object with the form values. The type of the object has to be passed  through a generic.
 - **formValidations:** Object with the same keys as the initialValues object. Each key has to have the type 'IValidation[]' with the custom validations you want for the field.
