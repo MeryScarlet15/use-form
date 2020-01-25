@@ -1,5 +1,5 @@
 {
-  "name": "use-form",
+  "name": "@meryscarlet/use-form",
   "version": "1.0.0",
   "description": "Form manager hook",
   "scripts": {
