@@ -1,0 +1,18 @@
+{
+  "name": "use-form",
+  "version": "1.0.0",
+  "description": "Form manager hook",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MeryScarlet15/use-form.git"
+  },
+  "author": "meryscarlet15@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MeryScarlet15/use-form/issues"
+  },
+  "homepage": "https://github.com/MeryScarlet15/use-form#readme"
+}
