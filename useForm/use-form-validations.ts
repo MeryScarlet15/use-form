@@ -15,7 +15,11 @@ import {
   IEqualsParams,
   IPhoneParams,
   IMobileParams,
+  IIban,
+  IMinLengthValidation,
 } from "./use-form-types";
+
+var IBAN = require("iban");
 
 const validations = new Validator();
 
@@ -32,6 +36,14 @@ export const EmailValidation: IEmail = (params: IErrorTextValidation) => {
     tag: "REQUIRED",
     method: (value: string, name: string) => validations.isEmail(value),
     errorText: params.errorText || "Invalid email",
+  };
+};
+
+export const MinLengthValidation: IMinLengthValidation = (params) => {
+  return {
+    tag: "REQUIRED",
+    method: (value: string, name: string) => validations.minLength(value, params.minLength),
+    errorText: params.errorText || `Must have at least ${params.minLength} characters`,
   };
 };
 
@@ -72,5 +84,13 @@ export const MobileValidation: IMobile = (params: IMobileParams) => {
     tag: "REQUIRED",
     method: (value: string, name: string) => validations.isPhoneNumber(value, params.region),
     errorText: params.errorText || "Invalid phone",
+  };
+};
+
+export const IBANValidation: IIban = (params: IErrorTextValidation) => {
+  return {
+    tag: "REQUIRED",
+    method: (value: string, name: string) => IBAN.isValid(value),
+    errorText: params.errorText || "Invalid Iban",
   };
 };

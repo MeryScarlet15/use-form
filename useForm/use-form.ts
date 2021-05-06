@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Error,
   IDefaultFormValues,
@@ -7,175 +7,169 @@ import {
   IUseValues,
   IUseFormParams,
   IUseForm,
-  IValidation
-} from './use-form-types'
+  IValidation,
+} from "./use-form-types";
 
-const DEFAULT_ERROR_NOTIFY = 'Hemos encontrado algunos errores.'
+const DEFAULT_ERROR_NOTIFY = "Hemos encontrado algunos errores.";
 
-const useValues: IUseValues = <
-  IFormValues extends { [key: string]: any } = IDefaultFormValues
->(
-  params: IUseValuesParams<IFormValues>
+const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDefaultFormValues>(
+  params: IUseValuesParams<IFormValues>,
 ) => {
-  type ErrorValues = IErrorValues<IFormValues>
+  type ErrorValues = IErrorValues<IFormValues>;
 
-  const [values, setValues] = useState<IFormValues>(params.initialValues)
+  const [values, setValues] = useState<IFormValues>(params.initialValues);
 
-  let initialErrors: any = { ...values }
+  let initialErrors: any = { ...values };
 
   Object.keys(initialErrors).map((key: string) => {
     initialErrors[key] = {
       error: false,
-      errorText: ''
-    }
-  })
+      errorText: "",
+    };
+  });
 
   const [errorValues, setErrorValues] = useState<ErrorValues>({
-    ...initialErrors
-  })
+    ...initialErrors,
+  });
 
   const resetErrorValues = () => {
-    let initialErrors: any = { ...values }
+    let initialErrors: any = { ...values };
 
     Object.keys(initialErrors).map((key: string) => {
       initialErrors[key] = {
         error: false,
-        errorText: ''
-      }
-    })
+        errorText: "",
+      };
+    });
 
-    setErrorValues(initialErrors)
-  }
+    setErrorValues(initialErrors);
+  };
 
   const forceErrorValues = (newErrorValues: ErrorValues) => {
-    setErrorValues(newErrorValues)
-  }
+    setErrorValues(newErrorValues);
+  };
 
   const handleFieldEvent = (val: any, name: string) => {
     setValues({
       ...values,
-      [name]: val
-    })
+      [name]: val,
+    });
 
     let newError: Error = {
       error: false,
-      errorText: ''
-    }
-    const { formValidations } = params
+      errorText: "",
+    };
+    const { formValidations } = params;
 
-    const valueValidations: IValidation[] = formValidations[name]
+    const valueValidations: IValidation[] = formValidations[name];
 
     const valueValidation: IValidation | undefined = valueValidations.find(
-      validation => !validation.method(val, name)
-    )
+      (validation) => !validation.method(val, name),
+    );
 
     if (valueValidation) {
       newError = {
         error: true,
-        errorText: valueValidation.errorText
-      }
+        errorText: valueValidation.errorText,
+      };
     }
 
     setErrorValues({
       ...errorValues,
-      [name]: newError
-    })
-  }
+      [name]: newError,
+    });
+  };
 
   return {
     values,
     errorValues,
     handleFieldEvent,
     forceErrorValues,
-    resetErrorValues
-  }
-}
+    resetErrorValues,
+  };
+};
 
-const useForm: IUseForm = <
-  IFormValues extends { [key: string]: any } = IDefaultFormValues
->(
-  params: IUseFormParams<IFormValues>
+const useForm: IUseForm = <IFormValues extends { [key: string]: any } = IDefaultFormValues>(
+  params: IUseFormParams<IFormValues>,
 ) => {
-  type ErrorValues = IErrorValues<IFormValues>
+  type ErrorValues = IErrorValues<IFormValues>;
 
-  const [errorTextForm, setErrorTextForm] = useState<string>('')
+  const [errorTextForm, setErrorTextForm] = useState<string>("");
 
-  const { initialValues, formValidations, submit } = params
+  const { initialValues, formValidations, submit } = params;
 
   const formActions = useValues<IFormValues>({
     initialValues,
-    formValidations
-  })
+    formValidations,
+  });
 
   const changeErrorTextForm = (textError: string) => {
-    setErrorTextForm(textError)
-  }
+    setErrorTextForm(textError);
+  };
 
   const validateForm = () => {
-    const { formValidations } = params
-    let valid: boolean = true
+    const { formValidations } = params;
+    let valid: boolean = true;
 
-    const values: IFormValues = formActions.values
+    const values: IFormValues = formActions.values;
 
-    let newErrorValues: ErrorValues = { ...formActions.errorValues }
+    let newErrorValues: ErrorValues = { ...formActions.errorValues };
 
     let inputError: Error = {
       error: false,
-      errorText: ''
-    }
+      errorText: "",
+    };
 
-    let valueValidation: IValidation | undefined = undefined
+    let valueValidation: IValidation | undefined = undefined;
 
     Object.keys(values).map((key: string) => {
       inputError = {
         error: false,
-        errorText: ''
-      }
+        errorText: "",
+      };
 
-      valueValidation = formValidations[key].find(
-        validation => !validation.method(values[key], key)
-      )
+      valueValidation = formValidations[key].find((validation) => !validation.method(values[key], key));
 
       if (valueValidation) {
-        valid = false
+        valid = false;
         inputError = {
           error: true,
-          errorText: valueValidation.errorText
-        }
+          errorText: valueValidation.errorText,
+        };
       }
 
       newErrorValues = {
         ...newErrorValues,
-        [key]: inputError
-      }
-    })
-    formActions.forceErrorValues(newErrorValues)
+        [key]: inputError,
+      };
+    });
+    formActions.forceErrorValues(newErrorValues);
 
-    return valid
-  }
+    return valid;
+  };
 
   const onSubmit = () => {
-    formActions.resetErrorValues()
+    formActions.resetErrorValues();
 
-    const isValid: boolean = validateForm()
+    const isValid: boolean = validateForm();
 
     if (isValid) {
       submit({
         values: formActions.values,
         errorValues: formActions.errorValues,
-        changeErrorText: changeErrorTextForm
-      })
+        changeErrorText: changeErrorTextForm,
+      });
     } else {
-      setErrorTextForm(params.defaultErrorValue || DEFAULT_ERROR_NOTIFY)
+      setErrorTextForm(params.defaultErrorValue || DEFAULT_ERROR_NOTIFY);
     }
-  }
+  };
 
   return {
     ...formActions,
     errorTextForm,
     onSubmit,
-    changeErrorTextForm
-  }
-}
+    changeErrorTextForm,
+  };
+};
 
-export default useForm
+export default useForm;

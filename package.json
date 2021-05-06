@@ -14,5 +14,12 @@
   "bugs": {
     "url": "https://github.com/MeryScarlet15/use-form/issues"
   },
-  "homepage": "https://github.com/MeryScarlet15/use-form#readme"
+  "homepage": "https://github.com/MeryScarlet15/use-form#readme",
+  "devDependencies": {
+    "@types/node": "^15.0.2"
+  },
+  "dependencies": {
+    "class-validator": "^0.11.0",
+    "react-dom": "^17.0.2"
+  }
 }
