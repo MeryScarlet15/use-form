@@ -6,7 +6,7 @@ This custom hook control all the form validations and values.
 
 ### Parameters
 
-- **initialValues: **Object with the form values. The type of the object has to be passed  through a generic.
+- **initialValues:** Object with the form values. The type of the object has to be passed  through a generic.
 - **formValidations:** Object with the same keys as the initialValues object. Each key has to have the type 'IValidation[]' with the custom validations you want for the field.
 - **submit :** Function to be executed in the onSubmit event.  The parameters has to have the type 'OnSubmitUseFormParams'.
 
