@@ -62,10 +62,12 @@ interface IUseValuesReturn<IFormValues, ErrorTypes> {
   handleFieldEvent: (val: string, name: string) => void;
   forceErrorValues: (newErrorValues: ErrorTypes) => void;
   resetErrorValues: () => void;
+  setAGroupOfValues: (newValues: { [key: string]: any }) => void;
 }
 
 export interface IUseValues {
-  <IFormValues>(params: IUseValuesParams<IFormValues>): IUseValuesReturn<IFormValues, IErrorValues<IFormValues>>;
+  <IFormValues>(params: IUseValuesParams<IFormValues>): IUseValuesReturn<IFormValues,
+    IErrorValues<IFormValues>>;
 }
 
 // Use form
@@ -77,14 +79,16 @@ export interface IUseFormParams<IFormValues> {
   submit: (params: ISubmitUseFormParams<IFormValues>) => void;
 }
 
-interface IUseFormReturn<IFormValues, ErrorTypes> extends IUseValuesReturn<IFormValues, ErrorTypes> {
+interface IUseFormReturn<IFormValues, ErrorTypes>
+  extends IUseValuesReturn<IFormValues, ErrorTypes> {
   errorTextForm: string;
   onSubmit: () => void;
   changeErrorTextForm: (textError: string) => void;
 }
 
 export interface IUseForm {
-  <IFormValues>(params: IUseFormParams<IFormValues>): IUseFormReturn<IFormValues, IErrorValues<IFormValues>>;
+  <IFormValues>(params: IUseFormParams<IFormValues>): IUseFormReturn<IFormValues,
+    IErrorValues<IFormValues>>;
 }
 
 // Use form validations
