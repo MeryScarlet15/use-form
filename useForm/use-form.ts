@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Error,
   IDefaultFormValues,
@@ -7,15 +7,17 @@ import {
   IUseValues,
   IUseFormParams,
   IUseForm,
-  IValidation,
-} from "./use-form-types";
+  IValidation
+} from './use-form-types';
 
-const DEFAULT_ERROR_NOTIFY = "Hemos encontrado algunos errores.";
+const DEFAULT_ERROR_NOTIFY = 'Hemos encontrado algunos errores.';
 
-const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDefaultFormValues>(
-  params: IUseValuesParams<IFormValues>,
+const useValues: IUseValues = <
+  IFormValues = IDefaultFormValues
+>(
+  params: IUseValuesParams<IFormValues>
 ) => {
-  type ErrorValues = IErrorValues<IFormValues>;
+  type ErrorValues = IErrorValues<IFormValues>
 
   const [values, setValues] = useState<IFormValues>(params.initialValues);
 
@@ -24,12 +26,12 @@ const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDef
   Object.keys(initialErrors).map((key: string) => {
     initialErrors[key] = {
       error: false,
-      errorText: "",
+      errorText: ''
     };
   });
 
   const [errorValues, setErrorValues] = useState<ErrorValues>({
-    ...initialErrors,
+    ...initialErrors
   });
 
   const resetErrorValues = () => {
@@ -38,7 +40,7 @@ const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDef
     Object.keys(initialErrors).map((key: string) => {
       initialErrors[key] = {
         error: false,
-        errorText: "",
+        errorText: ''
       };
     });
 
@@ -52,32 +54,70 @@ const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDef
   const handleFieldEvent = (val: any, name: string) => {
     setValues({
       ...values,
-      [name]: val,
+      [name]: val
     });
 
     let newError: Error = {
       error: false,
-      errorText: "",
+      errorText: ''
     };
     const { formValidations } = params;
 
     const valueValidations: IValidation[] = formValidations[name];
 
     const valueValidation: IValidation | undefined = valueValidations.find(
-      (validation) => !validation.method(val, name),
+      validation => !validation.method(val, name)
     );
 
     if (valueValidation) {
       newError = {
         error: true,
-        errorText: valueValidation.errorText,
+        errorText: valueValidation.errorText
       };
     }
 
     setErrorValues({
       ...errorValues,
-      [name]: newError,
+      [name]: newError
     });
+  };
+
+  const setAGroupOfValues = (newValues: { [key: string]: any }) => {
+    const keys = Object.keys(newValues);
+    let changedValues = {
+      ...values
+    };
+
+    let newErrorValues = {
+      ...errorValues
+    };
+
+    const { formValidations } = params;
+
+    for (const newValueKey of keys) {
+      let isFormKey = Object.keys(values).indexOf(newValueKey) !== -1;
+      if (isFormKey) {
+        let newValue = newValues[newValueKey];
+        changedValues[newValueKey] = newValue;
+
+        let valueValidations: IValidation[] = formValidations[newValueKey];
+        let valueValidation: IValidation | undefined = valueValidations.find(
+          validation => !validation.method(newValue, newValueKey)
+        );
+
+        if (valueValidation) {
+          newErrorValues = {
+            ...newErrorValues,
+            [newValueKey]: {
+              error: true,
+              errorText: valueValidation.errorText
+            }
+          };
+        }
+      }
+    }
+    setValues(changedValues);
+    setErrorValues(newErrorValues);
   };
 
   return {
@@ -86,15 +126,18 @@ const useValues: IUseValues = <IFormValues extends { [key: string]: any } = IDef
     handleFieldEvent,
     forceErrorValues,
     resetErrorValues,
+    setAGroupOfValues
   };
 };
 
-const useForm: IUseForm = <IFormValues extends { [key: string]: any } = IDefaultFormValues>(
-  params: IUseFormParams<IFormValues>,
+const useForm: IUseForm = <
+  IFormValues = IDefaultFormValues
+>(
+  params: IUseFormParams<IFormValues>
 ) => {
-  type ErrorValues = IErrorValues<IFormValues>;
+  type ErrorValues = IErrorValues<IFormValues>
 
-  const [errorTextForm, setErrorTextForm] = useState<string>("");
+  const [errorTextForm, setErrorTextForm] = useState<string>('');
 
   const { initialValues, formValidations, submit } = params;
 
@@ -117,7 +160,7 @@ const useForm: IUseForm = <IFormValues extends { [key: string]: any } = IDefault
 
     let inputError: Error = {
       error: false,
-      errorText: "",
+      errorText: ''
     };
 
     let valueValidation: IValidation | undefined = undefined;
@@ -125,22 +168,24 @@ const useForm: IUseForm = <IFormValues extends { [key: string]: any } = IDefault
     Object.keys(values).map((key: string) => {
       inputError = {
         error: false,
-        errorText: "",
+        errorText: ''
       };
 
-      valueValidation = formValidations[key].find((validation) => !validation.method(values[key], key));
+      valueValidation = formValidations[key].find(
+        validation => !validation.method(values[key], key)
+      );
 
       if (valueValidation) {
         valid = false;
         inputError = {
           error: true,
-          errorText: valueValidation.errorText,
+          errorText: valueValidation.errorText
         };
       }
 
       newErrorValues = {
         ...newErrorValues,
-        [key]: inputError,
+        [key]: inputError
       };
     });
     formActions.forceErrorValues(newErrorValues);
@@ -157,18 +202,21 @@ const useForm: IUseForm = <IFormValues extends { [key: string]: any } = IDefault
       submit({
         values: formActions.values,
         errorValues: formActions.errorValues,
-        changeErrorText: changeErrorTextForm,
+        changeErrorText: changeErrorTextForm
       });
     } else {
       setErrorTextForm(params.defaultErrorValue || DEFAULT_ERROR_NOTIFY);
     }
   };
 
+
+
   return {
     ...formActions,
     errorTextForm,
     onSubmit,
     changeErrorTextForm,
+    setAGroupOfValues: formActions.setAGroupOfValues
   };
 };
 
