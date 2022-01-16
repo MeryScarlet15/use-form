@@ -8,4 +8,3 @@ gh-pages -d example/build
 
 cd example
 
-rm -rf build
