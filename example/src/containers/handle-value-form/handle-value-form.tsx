@@ -61,7 +61,7 @@ const HandleValueForm: React.FC = () => {
     >
       <div className="handle-value-field">
         <InputText
-          label="Name"
+          label="Name*"
           placeholder="Name"
           value={actions.values.name}
           events={{
@@ -85,7 +85,7 @@ const HandleValueForm: React.FC = () => {
 
       <div className="handle-value-field">
         <InputText
-          label="Email"
+          label="Email*"
           placeholder="Email"
           value={actions.values.email}
           events={{
