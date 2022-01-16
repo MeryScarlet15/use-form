@@ -10,7 +10,10 @@ const HandleValuePageContainer = styled.div`
 
     @media screen and (min-width: ${screenSizes.ipad}px){ 
       width: 60%;
-      max-width: 524px;
+      max-width: 572px;
+      border: 1px solid ${colors.lightBlue};
+      border-radius: 16px;
+      padding: 24px;
     }
   }
 

@@ -4,8 +4,9 @@ import ButtonColor from '../../components/buttons/button-color/button-color';
 import InputText from '../../components/input-text/input-text';
 import useForm from '../../hooks/useForm/use-form';
 import { IFormValidations, ISubmitUseFormParams, IValidation } from '../../hooks/useForm/use-form-types';
-import { EmailValidation, RequiredValidation } from '../../hooks/useForm/use-form-validations'
-import HandleValueFormContainer from './handle-value-form-style'
+import { EmailValidation, RequiredValidation } from '../../hooks/useForm/use-form-validations';
+import HandleValuesFormContainer from './handle-values-form-style'
+
 
 interface IFormValues {
   name: string;
@@ -22,8 +23,7 @@ const formValidations: IFormValidations<IFormValues> = {
   email: [requiredValidation, emailValidation]
 }
 
-
-const useHandleValueForm = () => {
+const useHandleValuesForm = () => {
   const initialValues: IFormValues = {
     name: '',
     surname: '',
@@ -42,24 +42,34 @@ const useHandleValueForm = () => {
     }
   )
 
+  const handleFillButton = () => {
+    const newValues = {
+      surname: 'Example',
+      email: "example@example.com"
+    }
+
+    formActions.setAGroupOfValues(newValues)
+  }
+
   return {
-    ...formActions
+    ...formActions,
+    handleFillButton
   }
 }
 
-const HandleValueForm: React.FC = () => {
-  const actions = useHandleValueForm()
+const HandleValuesForm: React.FC = () => {
+  const actions = useHandleValuesForm()
 
-  return <HandleValueFormContainer>
+  return <HandleValuesFormContainer>
     <form
-      className="handle-value-form"
-      id="handle-value-form"
+      className="handle-values-form"
+      id="handle-values-form"
       onSubmit={(event) => {
         event.preventDefault()
         actions.onSubmit()
       }}
     >
-      <div className="handle-value-field">
+      <div className="handle-values-field">
         <InputText
           label="Name"
           placeholder="Name"
@@ -71,7 +81,7 @@ const HandleValueForm: React.FC = () => {
         />
       </div>
 
-      <div className="handle-value-field">
+      <div className="handle-values-field">
         <InputText
           label="Surname"
           placeholder="Surname"
@@ -83,7 +93,7 @@ const HandleValueForm: React.FC = () => {
         />
       </div>
 
-      <div className="handle-value-field">
+      <div className="handle-values-field">
         <InputText
           label="Email"
           placeholder="Email"
@@ -97,24 +107,45 @@ const HandleValueForm: React.FC = () => {
 
     </form>
 
-    <div className="handle-value-button">
-      <button
-        form='handle-value-form'
-      >
+
+    <div className="handle-values-buttons">
+      <div className="fill-button">
         <ButtonColor
-          id="handle-value-button"
-          text="Submit"
+          id="handle-values-button"
+          role='button'
+          text="Fill surname and email"
           height='medium'
           type="primary"
           color={{
-            primary: colors.blueMedium,
-            secondary: colors.white,
-            text: colors.white
+            primary: colors.white,
+            secondary: colors.blueMedium,
+            text: colors.blueMedium
+          }}
+          onClick={(event) => {
+            event.preventDefault();
+            actions.handleFillButton();
           }}
         />
-      </button>
+      </div>
+
+      <div className="submit-button">
+        <button form='handle-values-form'>
+          <ButtonColor
+            id="handle-values-button"
+            text="Submit"
+            height='medium'
+            type="primary"
+            color={{
+              primary: colors.blueMedium,
+              secondary: colors.white,
+              text: colors.white
+            }}
+          />
+        </button>
+      </div>
     </div>
-  </HandleValueFormContainer>
+
+  </HandleValuesFormContainer>
 }
 
-export default HandleValueForm
+export default HandleValuesForm
