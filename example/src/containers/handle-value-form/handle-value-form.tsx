@@ -7,67 +7,30 @@ import { IFormValidations, ISubmitUseFormParams, IValidation } from '../../hooks
 import { EmailValidation, RequiredValidation } from '../../hooks/useForm/use-form-validations'
 import HandleValueFormContainer from './handle-value-form-style'
 
-interface IFormValues {
-  name: string;
-  surname: string;
-  email: string;
+interface HandleValueFormProps {
+  formActions: any;
 }
 
-const requiredValidation: IValidation = RequiredValidation();
-const emailValidation: IValidation = EmailValidation()
-
-const formValidations: IFormValidations<IFormValues> = {
-  name: [requiredValidation],
-  surname: [],
-  email: [requiredValidation, emailValidation]
-}
-
-
-const useHandleValueForm = () => {
-  const initialValues: IFormValues = {
-    name: '',
-    surname: '',
-    email: '',
-  }
-
-  const submit = (params: ISubmitUseFormParams<IFormValues>) => {
-    console.log(params.values)
-  }
-
-  const formActions = useForm<IFormValues>(
-    {
-      initialValues,
-      formValidations,
-      submit
-    }
-  )
-
-  return {
-    ...formActions
-  }
-}
-
-const HandleValueForm: React.FC = () => {
-  const actions = useHandleValueForm()
-
+const HandleValueForm: React.FC<HandleValueFormProps> = (props: HandleValueFormProps) => {
+  const { formActions } = props
   return <HandleValueFormContainer>
     <form
       className="handle-value-form"
       id="handle-value-form"
       onSubmit={(event) => {
         event.preventDefault()
-        actions.onSubmit()
+        formActions.onSubmit()
       }}
     >
       <div className="handle-value-field">
         <InputText
           label="Name*"
           placeholder="Name"
-          value={actions.values.name}
+          value={formActions.values.name}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'name')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'name')
           }}
-          errorText={actions.errorValues.name.errorText}
+          errorText={formActions.errorValues.name.errorText}
         />
       </div>
 
@@ -75,11 +38,11 @@ const HandleValueForm: React.FC = () => {
         <InputText
           label="Surname"
           placeholder="Surname"
-          value={actions.values.surname}
+          value={formActions.values.surname}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'surname')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'surname')
           }}
-          errorText={actions.errorValues.surname.errorText}
+          errorText={formActions.errorValues.surname.errorText}
         />
       </div>
 
@@ -87,11 +50,11 @@ const HandleValueForm: React.FC = () => {
         <InputText
           label="Email*"
           placeholder="Email"
-          value={actions.values.email}
+          value={formActions.values.email}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'email')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'email')
           }}
-          errorText={actions.errorValues.email.errorText}
+          errorText={formActions.errorValues.email.errorText}
         />
       </div>
 
