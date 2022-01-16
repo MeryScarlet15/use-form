@@ -1,5 +1,5 @@
 export const routes = {
-  home: '/home',
+  home: '/',
   handleValue: '/handle-value',
   handleValues: '/handle-values'
 }
