@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Form manager hook",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:example": "cd example && npm start",
+    "deploy": "deploy.sh"
   },
   "repository": {
     "type": "git",
@@ -14,12 +16,13 @@
   "bugs": {
     "url": "https://github.com/MeryScarlet15/use-form/issues"
   },
-  "homepage": "https://github.com/MeryScarlet15/use-form#readme",
+  "homepage": "https://meryscarlet15.github.io/use-form",
   "devDependencies": {
-    "@types/node": "^15.0.2"
+    "@types/node": "^15.0.2",
+    "gh-pages": "^3.2.3"
   },
   "dependencies": {
-    "class-validator": "^0.11.0",
+    "class-validator": "0.11.0",
     "react-dom": "^17.0.2"
   }
 }
