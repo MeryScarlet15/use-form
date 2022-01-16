@@ -3,62 +3,15 @@ import { colors } from '../../assets/colors/colors';
 import ButtonColor from '../../components/buttons/button-color/button-color';
 import InputText from '../../components/input-text/input-text';
 import useForm from '../../hooks/useForm/use-form';
-import { IFormValidations, ISubmitUseFormParams, IValidation } from '../../hooks/useForm/use-form-types';
+import { IFormValidations, ISubmitUseFormParams, IUseForm, IValidation } from '../../hooks/useForm/use-form-types';
 import { EmailValidation, RequiredValidation } from '../../hooks/useForm/use-form-validations';
 import HandleValuesFormContainer from './handle-values-form-style'
 
-
-interface IFormValues {
-  name: string;
-  surname: string;
-  email: string;
+interface HandleValuesFormProps {
+  formActions: any
 }
-
-const requiredValidation: IValidation = RequiredValidation();
-const emailValidation: IValidation = EmailValidation()
-
-const formValidations: IFormValidations<IFormValues> = {
-  name: [requiredValidation],
-  surname: [],
-  email: [requiredValidation, emailValidation]
-}
-
-const useHandleValuesForm = () => {
-  const initialValues: IFormValues = {
-    name: '',
-    surname: '',
-    email: '',
-  }
-
-  const submit = (params: ISubmitUseFormParams<IFormValues>) => {
-    console.log(params.values)
-  }
-
-  const formActions = useForm<IFormValues>(
-    {
-      initialValues,
-      formValidations,
-      submit
-    }
-  )
-
-  const handleFillButton = () => {
-    const newValues = {
-      surname: 'Example',
-      email: "example@example.com"
-    }
-
-    formActions.setAGroupOfValues(newValues)
-  }
-
-  return {
-    ...formActions,
-    handleFillButton
-  }
-}
-
-const HandleValuesForm: React.FC = () => {
-  const actions = useHandleValuesForm()
+const HandleValuesForm: React.FC<HandleValuesFormProps> = (props: HandleValuesFormProps) => {
+  const { formActions } = props;
 
   return <HandleValuesFormContainer>
     <form
@@ -66,18 +19,18 @@ const HandleValuesForm: React.FC = () => {
       id="handle-values-form"
       onSubmit={(event) => {
         event.preventDefault()
-        actions.onSubmit()
+        formActions.onSubmit()
       }}
     >
       <div className="handle-values-field">
         <InputText
-          label="Name"
+          label="Name*"
           placeholder="Name"
-          value={actions.values.name}
+          value={formActions.values.name}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'name')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'name')
           }}
-          errorText={actions.errorValues.name.errorText}
+          errorText={formActions.errorValues.name.errorText}
         />
       </div>
 
@@ -85,23 +38,23 @@ const HandleValuesForm: React.FC = () => {
         <InputText
           label="Surname"
           placeholder="Surname"
-          value={actions.values.surname}
+          value={formActions.values.surname}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'surname')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'surname')
           }}
-          errorText={actions.errorValues.surname.errorText}
+          errorText={formActions.errorValues.surname.errorText}
         />
       </div>
 
       <div className="handle-values-field">
         <InputText
-          label="Email"
+          label="Email*"
           placeholder="Email"
-          value={actions.values.email}
+          value={formActions.values.email}
           events={{
-            onBlur: (event: any) => actions.handleFieldEvent(event.target.value, 'email')
+            onBlur: (event: any) => formActions.handleFieldEvent(event.target.value, 'email')
           }}
-          errorText={actions.errorValues.email.errorText}
+          errorText={formActions.errorValues.email.errorText}
         />
       </div>
 
@@ -123,7 +76,7 @@ const HandleValuesForm: React.FC = () => {
           }}
           onClick={(event) => {
             event.preventDefault();
-            actions.handleFillButton();
+            formActions.handleFillButton();
           }}
         />
       </div>
