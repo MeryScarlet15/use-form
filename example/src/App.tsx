@@ -6,7 +6,7 @@ import Svg from "./components/svg/svg";
 import { icons } from "./assets/icons/icons";
 import MainHeader from "./components/main-header/main-header";
 import {
-  BrowserRouter,
+  HashRouter,
   Routes,
   Route
 } from "react-router-dom";
@@ -19,7 +19,7 @@ import HandleValuePage from "./pages/handle-value/handle-value";
 const App: React.FC = () => {
   return (
     <div className="app-container">
-      <BrowserRouter>
+      <HashRouter>
         <MainLayout>
           <Routes>
             <Route path='/' element={<HomePage />} />
@@ -27,7 +27,7 @@ const App: React.FC = () => {
             <Route path='handle-values' element={<HandleValuesPage />} />
           </Routes>
         </MainLayout>
-      </BrowserRouter>
+      </HashRouter>
     </div >
   );
 };

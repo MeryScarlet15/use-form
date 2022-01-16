@@ -1,5 +1,5 @@
 {
-  "name": "revel-payments",
+  "name": "use-form",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -47,6 +47,7 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "https://meryscarlet15.github.io/use-form",
   "devDependencies": {
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11"
