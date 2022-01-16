@@ -23,19 +23,19 @@ var IBAN = require("iban");
 
 const validations = new Validator();
 
-export const RequiredValidation: IRequired = <IValue = string | boolean>(params: IErrorTextValidation) => {
+export const RequiredValidation: IRequired = <IValue = string | boolean>(params?: IErrorTextValidation) => {
   return {
     tag: "REQUIRED",
     method: (value: IValue, name: string) => (!value ? false : true),
-    errorText: params.errorText || "Required field",
+    errorText: params?.errorText || "Required field",
   };
 };
 
-export const EmailValidation: IEmail = (params: IErrorTextValidation) => {
+export const EmailValidation: IEmail = (params?: IErrorTextValidation) => {
   return {
     tag: "REQUIRED",
     method: (value: string, name: string) => validations.isEmail(value),
-    errorText: params.errorText || "Invalid email",
+    errorText: params?.errorText || "Invalid email",
   };
 };
 

@@ -389,11 +389,11 @@ export interface IErrorTextValidation {
 }
 
 export interface IRequired {
-  (params: IErrorTextValidation): IValidation;
+  (params?: IErrorTextValidation): IValidation;
 }
 
 export interface IEmail {
-  (params: IErrorTextValidation): IValidation;
+  (params?: IErrorTextValidation): IValidation;
 }
 
 export interface IMinLengthValidation {

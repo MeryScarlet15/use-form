@@ -14,6 +14,7 @@ import HomePage from "./pages/home/home";
 import HandleValuesPage from "./pages/handle-values/handle-values";
 import MainLayout from "./components/main-layout/main-layout";
 import { routes } from "./constants/routes";
+import HandleValuePage from "./pages/handle-value/handle-value";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <MainLayout>
           <Routes>
             <Route path='/' element={<HomePage />} />
+            <Route path='handle-value' element={<HandleValuePage />} />
             <Route path='handle-values' element={<HandleValuesPage />} />
           </Routes>
         </MainLayout>

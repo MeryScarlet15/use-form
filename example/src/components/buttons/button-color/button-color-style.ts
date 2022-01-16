@@ -5,15 +5,15 @@ interface Props {
   color: {
     primary: string;
     secondary: string;
-    text: string; 
+    text: string;
   };
 }
-const ButtonColorContainer = styled(BodyText as any)<Props>`
+const ButtonColorContainer = styled(BodyText as any) <Props>`
   background: ${props => props.color.primary};
   width: 100%; 
   height: 100%; 
   border-radius: 4px; 
-  color: ${props => props.color.secondary};
+  color: ${props => props.color.text};
   border: 1px solid ${props => props.color.primary};
   transition: 0.2s all ease-in-out;
   display: flex; 
@@ -56,12 +56,12 @@ const ButtonColorContainer = styled(BodyText as any)<Props>`
 
   &.secondary {
     background: ${props => props.color.secondary};
-    color: ${props => props.color.primary};
+    color: ${props => props.color.text};
     transition: 0.2s all ease-in-out;
 
     &:hover {
       background: ${props => props.color.primary};
-      color: ${props => props.color.secondary};
+      color: ${props => props.color.primary};
       transition: 0.2s all ease-in-out;
     }
   }

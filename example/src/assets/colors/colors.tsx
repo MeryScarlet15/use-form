@@ -8,5 +8,6 @@ export const colors = {
   midGrey: '#AAAAAA',
   hardGrey: '#666666',
   white: '#FFFFFF',
-  red: '#F23838'
+  red: '#F23838',
+  lightRed: "#F2C9CC"
 }

@@ -9,13 +9,13 @@ interface ButtonColorProps extends MainButtonProps {
   text: string;
   height?: TButtonColorHeight;
   color: {
-    primary: string; 
-    secondary: string; 
-    text: string; 
-  }; 
-  icon: {
-    left: string; 
-    right: string; 
+    primary: string;
+    secondary?: string;
+    text?: string;
+  };
+  icon?: {
+    left?: string;
+    right?: string;
   }
 }
 
@@ -27,14 +27,14 @@ const HEIGHTS: { [key: string]: string } = {
 
 const isSvg = (imgUrl: string) => {
   const urlSplited = imgUrl.split('.')
-  const splitedLenght = urlSplited.length; 
+  const splitedLenght = urlSplited.length;
   const format = urlSplited[splitedLenght - 1];
 
-  if(format.includes('svg')) {
-    return true; 
+  if (format.includes('svg')) {
+    return true;
   }
 
-  return false; 
+  return false;
 }
 
 const ButtonColor: React.FC<ButtonColorProps> = (props: ButtonColorProps) => {
@@ -60,13 +60,13 @@ const ButtonColor: React.FC<ButtonColorProps> = (props: ButtonColorProps) => {
   }
 
   return <MainButton {...mainButtonProps}>
-    <ButtonColorContainer color={{...color}} className={type || 'primary'}>
-      {icon?.left && 
+    <ButtonColorContainer color={{ ...color }} className={type || 'primary'}>
+      {icon?.left &&
         <div className="button-color-icon-left">
           {icon?.left && isSvg(icon.left) ? (
-            <Svg src={icon.left}/>
-          ): (
-            <img src={icon.left} alt="button-color-icon-left"/>
+            <Svg src={icon.left} />
+          ) : (
+            <img src={icon.left} alt="button-color-icon-left" />
           )}
         </div>
       }
@@ -74,13 +74,13 @@ const ButtonColor: React.FC<ButtonColorProps> = (props: ButtonColorProps) => {
 
       {
         icon?.right &&
-          <div className="button-color-icon-right">
-            {icon?.right && isSvg(icon.right) ? (
-              <Svg src={icon.right} />
-            ) : (
-              <img src={icon.right} alt="button-color-icon-right" />
-            )}
-          </div>
+        <div className="button-color-icon-right">
+          {icon?.right && isSvg(icon.right) ? (
+            <Svg src={icon.right} />
+          ) : (
+            <img src={icon.right} alt="button-color-icon-right" />
+          )}
+        </div>
       }
     </ButtonColorContainer>
   </MainButton>

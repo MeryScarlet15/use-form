@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
       <li className="example">
         <Link
           className="example-link"
-          to={routes.handleValues}
+          to={routes.handleValue}
         >
           <CardText
             text="HandleFieldEvent"

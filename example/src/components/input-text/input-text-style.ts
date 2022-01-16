@@ -92,7 +92,7 @@ const InputTextContainer = styled.div`
     font-family: "Roboto Medium";
     font-size: 12px;
     line-height: 16px;
-    color: #A1B4C4;
+    color: ${colors.red};
   }
 
   &.disabled {
@@ -117,7 +117,7 @@ const InputTextContainer = styled.div`
 
   &.error {
     .input-text-wrapper {
-      background: #EEE;
+      background:${colors.lightRed};
 
       .input-text-label {
         color: #D44B50;
