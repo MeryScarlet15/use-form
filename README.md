@@ -22,6 +22,7 @@ This custom hook control all the form validations and values.
 - **errorTextForm:** Form global error.
 - **onSubmit:** Function to be executed in the form onSubmit.
 - **changeErrorTextForm:** Function to change the errorTextForm value.
+- **setAGroupOfValues:** Function to change a group of values at the same time.
 
 ### Default Validations
 
